@@ -1,0 +1,66 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <Import Project="Local.props" Condition="Exists('Local.props')" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>true</ImplicitUsings>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <Sts2Dir Condition="'$(Sts2Dir)' == ''">$(STS2_DIR)</Sts2Dir>
+    <GodotExe Condition="'$(GodotExe)' == ''">$(GODOT_EXE)</GodotExe>
+    <Sts2DataDir Condition="'$(Sts2DataDir)' == '' AND '$(Sts2Dir)' != ''">$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
+  </PropertyGroup>
+
+  <Target Name="ValidateLocalPaths" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(Sts2Dir)' == ''"
+           Text="Sts2Dir is not configured. Copy Local.props.example to Local.props and set your Slay the Spire 2 install directory, or set STS2_DIR." />
+    <Error Condition="'$(Sts2DataDir)' == '' OR !Exists('$(Sts2DataDir)\sts2.dll')"
+           Text="Could not find sts2.dll under '$(Sts2DataDir)'. Check Sts2Dir/Sts2DataDir in Local.props." />
+    <Error Condition="!Exists('$(Sts2Dir)\mods\BaseLib\BaseLib.dll')"
+           Text="Could not find BaseLib.dll under '$(Sts2Dir)\mods\BaseLib'. Install BaseLib before building." />
+  </Target>
+
+  <ItemGroup>
+    <Reference Include="sts2">
+      <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="0Harmony">
+      <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="BaseLib">
+      <HintPath>$(Sts2Dir)\mods\BaseLib\BaseLib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="GodotSharp">
+      <HintPath>$(Sts2DataDir)\GodotSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="mzb\images\cards\ironclad_strike.png" />
+    <Content Include="mzb\images\cards\ironclad_strike.png.import" />
+  </ItemGroup>
+
+  <Target Name="CopyMod" AfterTargets="PostBuildEvent" Condition="'$(Sts2Dir)' != ''">
+    <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
+    <MakeDir Directories="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />
+    <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />
+    <Copy SourceFiles="mzb\images\cards\ironclad_strike.png" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\mzb\images\cards\" />
+  </Target>
+
+  <Target Name="ExportPck" AfterTargets="Publish" Condition="'$(Sts2Dir)' != '' AND '$(GodotExe)' != ''">
+    <Message Text="Exporting mod PCK to Slay the Spire 2 mods folder..." Importance="high" />
+    <Exec Command="&quot;$(GodotExe)&quot; --headless --export-pack &quot;Windows Desktop&quot; &quot;$(Sts2Dir)\mods\$(MSBuildProjectName)\$(MSBuildProjectName).pck&quot;"
+          EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
+          ContinueOnError="WarnAndContinue" />
+  </Target>
+</Project>
