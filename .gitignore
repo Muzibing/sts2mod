@@ -1,0 +1,51 @@
+# Godot editor cache and generated imports
+.godot/
+.import/
+
+# Godot platform exports and credentials
+/android/
+/ios/
+export_credentials.cfg
+
+# .NET build output
+bin/
+obj/
+*.pdb
+*.dll
+*.deps.json
+*.runtimeconfig.json
+mono_crash.*
+
+# Local machine configuration
+Local.props
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# IDE and agent-local state
+.vs/
+.idea/
+.vscode/
+.agents/
+.codex/
+
+# NuGet/local packages
+packages/
+*.nupkg
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.orig
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db

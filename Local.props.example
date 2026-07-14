@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <Sts2Dir>D:\Steam\steamapps\common\Slay the Spire 2</Sts2Dir>
+    <GodotExe>C:\Path\To\Godot_v4.5.1-stable_mono_win64.exe</GodotExe>
+  </PropertyGroup>
+</Project>
