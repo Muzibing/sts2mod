@@ -36,6 +36,8 @@ packages/
 *.nupkg
 
 # Logs and temporary files
+dist/
+release/
 *.log
 *.tmp
 *.bak
