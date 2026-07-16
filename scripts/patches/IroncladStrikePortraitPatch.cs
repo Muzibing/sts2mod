@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using mzb.scripts;
 using mzb.scripts.assets;
+using mzb.scripts.cards;
 
 namespace mzb.scripts.patches;
 
@@ -24,12 +25,13 @@ public static class IroncladStrikeTexturePatch
 {
     static bool Prefix(CardModel __instance, ref Texture2D __result)
     {
-        if (__instance is not StrikeIronclad)
+        var texture = __instance switch
         {
-            return true;
-        }
+            StrikeIronclad => ModTextureCache.IroncladStrikePortrait,
+            Mystery => ModTextureCache.MysteryPortrait,
+            _ => null
+        };
 
-        var texture = ModTextureCache.IroncladStrikePortrait;
         if (texture == null)
         {
             return true;
@@ -37,5 +39,17 @@ public static class IroncladStrikeTexturePatch
 
         __result = texture;
         return false;
+    }
+}
+
+[HarmonyPatch(typeof(CardModel), nameof(CardModel.PortraitPath), MethodType.Getter)]
+public static class MysteryPortraitPathPatch
+{
+    static void Postfix(CardModel __instance, ref string __result)
+    {
+        if (__instance is Mystery)
+        {
+            __result = ModResources.MysteryPortraitPath;
+        }
     }
 }

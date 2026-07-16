@@ -6,9 +6,13 @@ namespace mzb.scripts.assets;
 public static class ModTextureCache
 {
     private static Texture2D? ironcladStrikePortrait;
+    private static Texture2D? mysteryPortrait;
 
     public static Texture2D? IroncladStrikePortrait =>
         ironcladStrikePortrait ??= LoadTexture(ModResources.IroncladStrikePortraitRelativePath);
+
+    public static Texture2D? MysteryPortrait =>
+        mysteryPortrait ??= LoadTexture(ModResources.MysteryPortraitRelativePath);
 
     private static Texture2D? LoadTexture(string relativePath)
     {

@@ -47,6 +47,8 @@
   <ItemGroup>
     <Content Include="mzb\images\cards\ironclad_strike.png" />
     <Content Include="mzb\images\cards\ironclad_strike.png.import" />
+    <Content Include="mzb\images\cards\mystery.png" />
+    <Content Include="mzb\images\cards\mystery.png.import" />
   </ItemGroup>
 
   <Target Name="CopyMod" AfterTargets="PostBuildEvent" Condition="'$(Sts2Dir)' != ''">
@@ -55,6 +57,7 @@
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />
     <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />
     <Copy SourceFiles="mzb\images\cards\ironclad_strike.png" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\mzb\images\cards\" />
+    <Copy SourceFiles="mzb\images\cards\mystery.png" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\mzb\images\cards\" />
   </Target>
 
   <Target Name="ExportPck" AfterTargets="Publish" Condition="'$(Sts2Dir)' != '' AND '$(GodotExe)' != ''">

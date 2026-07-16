@@ -2,7 +2,7 @@
   "id": "mzb",
   "name": "STS2 mzb Mod",
   "author": "Muzbing",
-  "description": "Replaces the Ironclad Strike portrait and adds one extra Neutralize to the Silent starting deck.",
+  "description": "Adds the Mystery card to every character starting deck and card pool, replaces the Ironclad Strike portrait, and adds one extra Neutralize to the Silent starting deck.",
   "version": "0.1.0",
   "min_game_version": "0.107.1",
   "has_pck": false,
