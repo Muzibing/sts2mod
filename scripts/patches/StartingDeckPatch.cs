@@ -11,6 +11,9 @@ namespace mzb.scripts.patches;
 [HarmonyPatch(typeof(Player), "PopulateStartingDeck")]
 public static class StartingDeckPatch
 {
+    /// <summary>
+    /// 在角色初始牌组生成后补上 Mystery，并给静默猎手额外塞一张 Neutralize。
+    /// </summary>
     static void Postfix(Player __instance)
     {
         AddMysteryToStartingDeck(__instance);
@@ -27,6 +30,9 @@ public static class StartingDeckPatch
         Log.Info($"[mzb] Added an extra {ModResources.NeutralizeId} to Silent starting deck.");
     }
 
+    /// <summary>
+    /// 确保每个角色的初始牌组里都只会额外出现一张 Mystery。
+    /// </summary>
     private static void AddMysteryToStartingDeck(Player player)
     {
         if (player.Deck.Cards.Any(card => card is Mystery))
